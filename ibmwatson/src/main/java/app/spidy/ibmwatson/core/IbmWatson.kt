@@ -29,6 +29,7 @@ class IbmWatson(private val context: Context, private val listener: Listener) {
     @SuppressLint("SetJavaScriptEnabled")
     fun initialize(): IbmWatson {
         debug("STATUS: initialize...")
+
         webView = WebView(context)
         webView.settings.apply {
             layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING
@@ -132,7 +133,7 @@ class IbmWatson(private val context: Context, private val listener: Listener) {
                 if (isCanceled) {
                     listener.onCancel()
                 } else {
-                    listener.onGenerated(id, EN.getVoices(), CookieManager.getInstance().getCookie(url))
+                    listener.onGenerated(id, CookieManager.getInstance().getCookie(url))
                 }
                 clearCookies()
                 webView.loadData("<pre>blank</pre>", "text/html", "utf-8")
@@ -198,13 +199,20 @@ class IbmWatson(private val context: Context, private val listener: Listener) {
     }
 
 
+    companion object {
+        val VOICES: List<Voice>
+            get() = EN.voices + AR.voices + CN.voices + NL.voices + FR.voices + DE.voices + IT.voices + JP.voices + KR.voices + BR.voices
+    }
+
+
     interface Listener {
-        fun onGenerated(id: String, voices: List<Voice>, cookies: String)
+        fun onGenerated(id: String, cookies: String)
         fun onFail()
         fun onCancel()
     }
 
     object EN {
+        const val NAME = "English"
         const val VOICE_OLIVIA = "en-US_OliviaV3Voice"
         const val VOICE_MICHAEL = "en-US_MichaelV3Voice"
         const val VOICE_LISA = "en-US_LisaV3Voice"
@@ -212,17 +220,108 @@ class IbmWatson(private val context: Context, private val listener: Listener) {
         const val VOICE_HENRY = "en-US_HenryV3Voice"
         const val VOICE_EMILY = "en-US_EmilyV3Voice"
         const val VOICE_ALLISON = "en-US_AllisonV3Voice"
-
-        fun getVoices(): List<Voice> {
-            return listOf(
-                    Voice("Olivia", EN.VOICE_OLIVIA),
-                    Voice("Michael", EN.VOICE_MICHAEL),
-                    Voice("Lisa", EN.VOICE_LISA),
-                    Voice("Kevin", EN.VOICE_KEVIN),
-                    Voice("Henry", EN.VOICE_HENRY),
-                    Voice("Emily", EN.VOICE_EMILY),
-                    Voice("Allison", EN.VOICE_ALLISON)
+        val voices: List<Voice>
+            get() = listOf(
+                Voice("Olivia", VOICE_OLIVIA),
+                Voice("Michael", VOICE_MICHAEL),
+                Voice("Lisa", VOICE_LISA),
+                Voice("Kevin", VOICE_KEVIN),
+                Voice("Henry", VOICE_HENRY),
+                Voice("Emily", VOICE_EMILY),
+                Voice("Allison", VOICE_ALLISON)
             )
-        }
+    }
+
+    object AR {
+        const val NAME = "Arabic"
+        const val VOICE_OMAR = "ar-AR_OmarVoice"
+        val voices: List<Voice>
+            get() = listOf(
+                Voice("Omar", VOICE_OMAR)
+            )
+    }
+
+    object CN {
+        const val NAME = "Chinese"
+        const val VOICE_ZHANG_JING = "zh-CN_ZhangJingVoice"
+        const val VOICE_WANG_WEI = "zh-CN_WangWeiVoice"
+        const val VOICE_LI_NA = "zh-CN_LiNaVoice"
+        val voices: List<Voice>
+            get() = listOf(
+                Voice("Zhang Jing", VOICE_ZHANG_JING),
+                Voice("Wang Wei", VOICE_WANG_WEI),
+                Voice("Li Na", VOICE_LI_NA)
+            )
+    }
+
+    object NL {
+        const val NAME = "Dutch"
+        const val VOICE_EMMA = "nl-NL_EmmaVoice"
+        const val VOICE_LIAM = "nl-NL_LiamVoice"
+        val voices: List<Voice>
+            get() = listOf(
+                Voice("Emma", VOICE_EMMA),
+                Voice("Liam", VOICE_LIAM)
+            )
+    }
+
+    object FR {
+        const val NAME = "French"
+        const val VOICE_RENEE = "fr-FR_ReneeV3Voice"
+        const val VOICE_NICOLAS = "fr-FR_NicolasV3Voice"
+        val voices: List<Voice>
+            get() = listOf(
+                Voice("Renee", VOICE_RENEE),
+                Voice("Nicolas", VOICE_NICOLAS)
+            )
+    }
+
+    object DE {
+        const val NAME = "German"
+        const val VOICE_DIETER = "de-DE_DieterV3Voice"
+        const val VOICE_ERIKA = "de-DE_ErikaV3Voice"
+        val voices: List<Voice>
+            get() = listOf(
+                Voice("Dieter", VOICE_DIETER),
+                Voice("Erika", VOICE_ERIKA)
+            )
+    }
+
+    object IT {
+        const val NAME = "Italian"
+        const val VOICE_FRANCESCA = "it-IT_FrancescaV3Voice"
+        val voices: List<Voice>
+            get() = listOf(
+                Voice("Francesca", VOICE_FRANCESCA)
+            )
+    }
+
+    object JP {
+        const val NAME = "Japanese"
+        const val VOICE_EMI = "ja-JP_EmiV3Voice"
+        val voices: List<Voice>
+            get() = listOf(
+                Voice("Emi", VOICE_EMI)
+            )
+    }
+
+    object KR {
+        const val NAME = "Korean"
+        const val VOICE_YUNA = "ko-KR_YunaVoice"
+        const val VOICE_YOUNGMI = "ko-KR_YoungmiVoice"
+        val voices: List<Voice>
+            get() = listOf(
+                Voice("Yuna", VOICE_YUNA),
+                Voice("Youngmi", VOICE_YOUNGMI)
+            )
+    }
+
+    object BR {
+        const val NAME = "Portuguese"
+        const val VOICE_ISABELA = "pt-BR_IsabelaV3Voice"
+        val voices: List<Voice>
+            get() = listOf(
+                Voice("Isabela", VOICE_ISABELA)
+            )
     }
 }

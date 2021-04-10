@@ -13,7 +13,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import app.spidy.ibmwatson.core.IbmWatson
 import app.spidy.ibmwatson.data.Voice
-import app.spidy.ibmwatson.utils.getValue
+import app.spidy.ibmwatson.utils.getVoice
 
 class MainActivity : AppCompatActivity() {
     private lateinit var downloadManager: DownloadManager
@@ -41,8 +41,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val listener = object : IbmWatson.Listener {
-        override fun onGenerated(id: String, voices: List<Voice>, cookies: String) {
-            voices.getValue(IbmWatson.EN.VOICE_LISA)?.getSynthesizeUrl(id)?.also { url ->
+        override fun onGenerated(id: String, cookies: String) {
+            IbmWatson.VOICES.getVoice(IbmWatson.EN.VOICE_LISA)?.getSynthesizeUrl(id)?.also { url ->
                 download(url, cookies)
             }
             generateBtn.visibility = View.VISIBLE
