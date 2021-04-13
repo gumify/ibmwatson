@@ -74,7 +74,7 @@ class IbmWatson(private val context: Context, private val listener: Listener) {
             override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
                 super.onReceivedError(view, request, error)
                 if (!isError) {
-                    debug("ERROR: onReceivedError")
+                    debug("ERROR: onReceivedError. $error")
                     listener.onFail()
                     isError = true
                 }
@@ -142,6 +142,7 @@ class IbmWatson(private val context: Context, private val listener: Listener) {
     }
 
     private fun generateVoice(s: String) {
+        val query = s.replace("\n", "")
         async {
             while (!isLoaded) sleep(100)
             onUiThread {

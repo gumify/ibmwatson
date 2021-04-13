@@ -1,4 +1,4 @@
-package app.spidy.ibmwatsonexample
+    package app.spidy.ibmwatsonexample
 
 import android.app.DownloadManager
 import android.content.Context
