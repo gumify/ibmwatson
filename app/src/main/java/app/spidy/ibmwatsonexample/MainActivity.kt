@@ -7,16 +7,17 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import app.spidy.ibmwatson.core.IbmWatson
-import app.spidy.ibmwatson.data.Voice
 import app.spidy.ibmwatson.utils.getVoice
+import kotlin.concurrent.thread
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var downloadManager: DownloadManager
+    class MainActivity : AppCompatActivity() {
+        private lateinit var downloadManager: DownloadManager
     private lateinit var ibmWatson: IbmWatson
     private lateinit var progressBar: ProgressBar
     private lateinit var generateBtn: Button
@@ -43,7 +44,8 @@ class MainActivity : AppCompatActivity() {
     private val listener = object : IbmWatson.Listener {
         override fun onGenerated(id: String, cookies: String) {
             IbmWatson.VOICES.getVoice(IbmWatson.EN.VOICE_LISA)?.getSynthesizeUrl(id)?.also { url ->
-                download(url, cookies)
+                Log.d("hello", url)
+                // download(url, cookies)
             }
             generateBtn.visibility = View.VISIBLE
             progressBar.visibility = View.INVISIBLE

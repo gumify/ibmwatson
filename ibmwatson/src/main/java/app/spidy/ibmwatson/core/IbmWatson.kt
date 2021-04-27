@@ -73,7 +73,8 @@ class IbmWatson(private val context: Context, private val listener: Listener) {
 
             override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
                 super.onReceivedError(view, request, error)
-                if (!isError) {
+                val url = request?.url?.toString()
+                if (url != null && url == "https://www.ibm.com/demos/live/tts-demo/self-service/home") {
                     debug("ERROR: onReceivedError. $error")
                     listener.onFail()
                     isError = true
